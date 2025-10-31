@@ -5,9 +5,10 @@ from src.errors import FolderError
 from src.errors import ExistError
 
 def grep(inp_data):
-    ig = False
-    r = False
+    ig = False # переменная игнорирования регистра
+    r = False # переменная для рекурсивного поиска
     
+    # проверяем заданы ли нам две переменные, обозначеные выше
     if inp_data[0] == '-i':
         ig = True
         pattern = inp_data[1]
@@ -21,17 +22,19 @@ def grep(inp_data):
         path = inp_data[1]
 
     if ig:
-        flags = re.IGNORECASE
+        flags = re.IGNORECASE # игнорируем регистр
     else:
         flags = 0
-    regex = re.compile(pattern, flags)
-    
+    regex = re.compile(pattern, flags) # функция для компиляции выражения
+
+    # проверяем существует ли файл и проверяем есть ли в нём строка, соответствующая шаблону
     if os.path.isfile(path):
         with open(path, 'r', encoding='utf-8') as f:
             for i, line in enumerate(f, 1):
                 if regex.search(line):
                     print(f"{path}:{i}:{line.rstrip()}")
 
+    # проверяем существует ли папка и проверяем есть ли в ней файлы, в которых есть строки, удовл. шаблону
     elif os.path.isdir(path):
         if r:
             for root, dirs, files in os.walk(path):
@@ -40,6 +43,7 @@ def grep(inp_data):
                         for i, line in enumerate(f, 1):
                             if regex.search(line):
                                 print(f"{os.path.join(root, file)}:{i}:{line.rstrip()}")
+        # иначе выводим ошибки
         else:
             error = "Используйте -r"
             logging_func(error)

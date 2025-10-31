@@ -1,4 +1,4 @@
-
+# функция для отмена операций
 def undo(inp_data):
     if inp_data[0] == 'cp':
         return f"Команда отменена"

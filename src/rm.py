@@ -12,7 +12,7 @@ def rm(inp_data):
         logging_func(error)
         raise ExistError(f'{error}')
 
-    # Проверяем есть ли опция -r
+    # проверяем есть ли метка -r
     if inp_data[0] == '-r':
         if len(inp_data) < 2:
             error = "Не указано, что удалять"
@@ -24,17 +24,20 @@ def rm(inp_data):
         folder = inp_data[0]
         r = False
 
+    # проверяем существует ли файл, иначе ошибка
     if not os.path.exists(folder):
         error = "Путь не существует"
         logging_func(error)
         raise PathError(f'{error}')
 
+    # проверяем является ли директория корневой или родительской, тк их нельзя удалить
     main_dir = os.path.abspath(folder)
     if main_dir == os.path.abspath('..'):
         error = "Нельзя удалять корневую или родительскую папку"
         logging_func(error)
         raise FolderError(f'{error}')
 
+    # проверяем папка ли это и метку, отвечающую за рекурсивное удаление
     if os.path.isdir(folder):
         if r:
             answer = input(
@@ -52,7 +55,7 @@ def rm(inp_data):
             error = f"'{folder}' это папка, используйте -r"
             logging_func(error)
             raise FolderError(f'{error}')
-    else:
+    else: # если не папка, то просто удаляем, убедившись, что нужно действительно удалить
         answer = input(f"Удалить папку '{folder}' и всё внутри? (yes/no): ")
         if answer.lower() in ['yes', 'y']:
             os.remove(folder)

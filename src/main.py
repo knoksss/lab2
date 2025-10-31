@@ -18,19 +18,20 @@ print('Введите команду. Для завершения введите
 
 while True:
     try:
-        entrance_str = input()
+        entrance_str = input() # входная строка
 
-        if entrance_str == "Стоп! Мне неприятно":
+        if entrance_str == "Стоп! Мне неприятно": # при вводе этой команды выходим
             break
-        if not entrance_str:
+        if not entrance_str: # если ничего не введено, то продолжаем цикл
             continue
 
-        remember(entrance_str)
+        remember(entrance_str) # запоминаем какая команда была в history
 
         mas = entrance_str.split()
         cmd = mas[0]
         inp_data = mas[1:]
 
+        # блок с командами
         if cmd == 'ls':
             logging_func(entrance_str)
             ls(inp_data)
@@ -86,7 +87,7 @@ while True:
         else:
             error = "ERROR: Неизвестная команда"
             logging_func(error)
-            raise ValueError(f'{error}')
+            raise ValueError(f'{error}') # если на вход поступает неизвестная команда, то выводим ошибку
 
     except Exception as e:
         error = f"{str(e)}"
