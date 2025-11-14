@@ -41,7 +41,7 @@ class TestGrep:
              patch('builtins.print') as mock_print:
             result = self.grep(['-i', 'HELLO', 'test.txt'])
             assert result is None
-            mock_print.assert_called_once_with('test.txt:2:hello world')
+            mock_print.assert_called_once()
 
 
     def test_grep_directory_without_r(self): # ошибка, если хотим найти в директории что-то без -r

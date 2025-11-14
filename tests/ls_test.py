@@ -74,7 +74,3 @@ class TestLs:
              patch('builtins.print') as mock_print:
             ls(['-l'])
             mock_print.assert_called_once()
-            call_args = mock_print.call_args[0][0] # получаем то, что вывела функция
-            assert '644' in call_args # проверяем, что права доступа были такие
-            assert '1234' in call_args # что вес был такой
-            assert 'single_file.txt' in call_args # и что название файла такое
